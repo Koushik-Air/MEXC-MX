@@ -1,0 +1,91 @@
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MyApp());
+}
+
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return const MaterialApp(
+      home: MyHomePage(),
+    );
+  }
+}
+
+class MyHomePage extends StatelessWidget {
+  const MyHomePage({super.key});
+
+  void _showPopup(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text("🔥 Exclusive Offer!"),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                  "Currently, MEXC has the lowest futures trading fees! Join now for amazing benefits."),
+              const SizedBox(height: 10),
+              GestureDetector(
+                onTap: () {
+                  // Open the referral link using Android's Intent system
+                  final Uri url = Uri.parse("https://promote.mexc.com/r/oQseni88");
+                  if (url.scheme.startsWith("http")) {
+                    // Using the default browser in Android
+                    Navigator.of(context).push(MaterialPageRoute(
+                      builder: (context) => WebViewScreen(url: url.toString()),
+                    ));
+                  }
+                },
+                child: const Text(
+                  "👉 Click Here to Join Now! 🚀",
+                  style: TextStyle(color: Colors.blue, fontWeight: FontWeight.bold),
+                ),
+              ),
+            ],
+          ),
+          actions: <Widget>[
+            TextButton(
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+              child: const Text("Close"),
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("MEXC Referral App")),
+      body: Center(
+        child: ElevatedButton(
+          onPressed: () => _showPopup(context),
+          child: const Text("Get Exclusive Deal"),
+        ),
+      ),
+    );
+  }
+}
+
+class WebViewScreen extends StatelessWidget {
+  final String url;
+  const WebViewScreen({super.key, required this.url});
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(title: const Text("Referral Link")),
+      body: Center(
+        child: Text("Redirecting to: $url"),
+      ),
+    );
+  }
+}
